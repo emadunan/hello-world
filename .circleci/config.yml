@@ -3,9 +3,7 @@ jobs:
   build:
     docker:
       - image: cimg/base:2021.04
-        auth:
-          username: emadunan
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+
     steps:
       - checkout
       - run:
@@ -18,4 +16,3 @@ jobs:
           command: |
             ls -al
             echo '^^^The files in your repo^^^'
-            
