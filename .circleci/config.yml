@@ -5,7 +5,7 @@ jobs:
       docker:
         - image: alpine:3.15
           auth:
-            username: mydockerhub-user
+            username: emadunan
             password: $DOCKERHUB_PASSWORD
   
     deploy:
@@ -18,7 +18,7 @@ jobs:
           - run:
               name: Deploy Over SSH
               command: |
-              ssh $SSH_USER@$SSH_HOST "ls -lha"
+              ssh $SSH_USER@$SSH_HOST ls -lha
 
 workflows:
     build-and-deploy:
