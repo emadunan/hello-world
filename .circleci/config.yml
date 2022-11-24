@@ -1,25 +1,21 @@
 version: 2.1
 
 jobs:
-    deploy:
-      docker:
-        - image: alpine:3.15
+  deploy:
+    docker:
+      - image: alpine:3.15
 
-      machine:
-          enabled: true
-          
-      steps:
-          - checkout
-          - add_ssh_keys
-          - run:
-              name: Deploy Over SSH
-              command: |
-              ssh $SSH_USER@$SSH_HOST "echo done"
+    steps:
+      - checkout
+      - add_ssh_keys
+      - run:
+          name: "deploy Over SSH"
+          command: |
+            ssh $SSH_USER@$SSH_HOST "echo done"
 
 workflows:
-    build-and-deploy:
+  build-and-deploy:
     jobs:
-        - deploy:
-            filters:
-            branches:
-                only: master # only deploy on the main branch
+      - deploy:
+          branches:
+            only: master # only deploy on the main branch
