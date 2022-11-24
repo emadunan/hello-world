@@ -11,7 +11,7 @@ jobs:
           name: "deploy Over SSH"
           command: |
             ls -lha
-            ssh -o StrictHostKeyChecking=no emadu@$178.62.94.228 "ls"
+            ssh -o StrictHostKeyChecking=no emadu@$178.62.94.228 'ls'
 
 workflows:
   build-and-deploy:
