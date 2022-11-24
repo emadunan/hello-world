@@ -16,6 +16,4 @@ jobs:
 workflows:
   build-and-deploy:
     jobs:
-      - deploy:
-          branches:
-            only: master # only deploy on the main branch
+      - deploy
