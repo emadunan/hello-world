@@ -18,5 +18,4 @@ jobs:
           command: |
             ls -al
             echo '^^^The files in your repo^^^'
-
-# VS Code Extension Version: 1.1.1
+            
