@@ -18,7 +18,7 @@ jobs:
           - run:
               name: Deploy Over SSH
               command: |
-              ssh emadu@178.62.94.228 "ls -lha"
+              ssh $SSH_USER@$SSH_HOST "ls -lha"
 
 workflows:
     build-and-deploy:
