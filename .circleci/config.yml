@@ -6,14 +6,12 @@ jobs:
       - image: cimg/base:stable
 
     steps:
-      - add_ssh_keys:
-        fingerprints:
-          - 'a5:a1:ae:ad:f2:e4:16:f2:82:25:a7:08:94:e5:fc:77'
+      - add_ssh_keys
       - run:
           name: "deploy Over SSH"
           command: |
             ls -lha
-            ssh $SSH_USER@$SSH_HOST "ls"
+            ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "ls"
 
 workflows:
   build-and-deploy:
