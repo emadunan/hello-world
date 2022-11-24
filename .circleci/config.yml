@@ -11,7 +11,7 @@ jobs:
       - run:
           name: "deploy Over SSH"
           command: |
-            ssh $SSH_USER@$SSH_HOST "echo done"
+            ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "echo done"
 
 workflows:
   build-and-deploy:
