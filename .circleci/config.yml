@@ -1,34 +1,19 @@
 version: 2.1
 
 jobs:
-    build:
-      docker:
-        - image: alpine:3.15
-          auth:
-            username: emadunan
-            password: $DOCKERHUB_PASSWORD
-  
     deploy:
-      machine:
-          enabled: true
-      steps:
-          - add_ssh_keys:
-            fingerprints:
-              - "a5:a1:ae:ad:f2:e4:16:f2:82:25:a7:08:94:e5:fc:77"
-          - run:
-              name: Deploy Over SSH
-              command: |
-              ssh $SSH_USER@$SSH_HOST "ls -lha"
+    machine:
+        enabled: true
+    steps:
+        - run:
+            name: Deploy Over SSH
+            command: |
+            ssh $SSH_USER@$SSH_HOST "<remote deploy command>"
 
 workflows:
     build-and-deploy:
     jobs:
-        - build
         - deploy:
-            requires:
-            - build # only deploy once build job has completed
             filters:
             branches:
                 only: main # only deploy on the main branch
-
-# VS Code Extension Version: 1.1.1
