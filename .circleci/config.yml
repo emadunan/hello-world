@@ -8,7 +8,7 @@ jobs:
         - run:
             name: Deploy Over SSH
             command: |
-            ssh $SSH_USER@$SSH_HOST "ls -la"
+            ssh $SSH_USER@$SSH_HOST:ls -la
 
 workflows:
     build-and-deploy:
