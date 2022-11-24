@@ -1,71 +1,26 @@
 version: 2.1
+
 jobs:
-  # running commands on a basic image
-  Hello-World:
-    docker:
-      - image: alpine:3.15
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+    build:
+    #...
+    deploy:
+    machine:
+        enabled: true
     steps:
-      - run:
-          name: Saying Hello
-          command: |
-            echo 'Hello World!'
-            echo 'This is the delivery pipeline'
-  # fetching code from the repo
-  Fetch-Code:
-    docker:
-      - image: cimg/base:2021.04
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-    steps:
-      - checkout
-      - run:
-          name: Getting the Code
-          command: |
-            ls -al
-            echo '^^^Your repo files^^^'
-  # running a node container
-  Using-Node:
-    docker:
-      - image: cimg/node:17.2
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-    steps:
-      - run:
-          name: Running the Node Container
-          command: |
-            node -v
-  Now-Complete:
-    docker:
-      - image: alpine:3.15
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-    steps:
-      - run:
-          name: Approval Complete
-          command: |
-            echo 'The work is now complete.'
+        - run:
+            name: Deploy Over SSH
+            command: |
+            ssh $SSH_USER@$SSH_HOST "ls -lha"
 
 workflows:
-  Example-Workflow:
+    build-and-deploy:
     jobs:
-      - Hello-World
-      - Fetch-Code:
-          requires:
-            - Hello-World
-      - Using-Node:
-          requires:
-            - Fetch-Code
-      - Hold-for-Approval:
-          type: approval
-          requires:
-            - Using-Node
-            - Fetch-Code
-      - Now-Complete:
-          requires:
-            - Hold-for-Approval
+        - build
+        - deploy:
+            requires:
+            - build # only deploy once build job has completed
+            filters:
+            branches:
+                only: main # only deploy on the main branch
+
+# VS Code Extension Version: 1.1.1
