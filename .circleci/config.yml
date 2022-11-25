@@ -1,19 +1,19 @@
 version: 2.1
 
 jobs:
-  deploy:
-    docker:
-      - image: cimg/base:stable
-
-    steps:
-      - add_ssh_keys
-      - run:
-          name: "deploy Over SSH"
-          command: |
-            ls -lha
-            ssh -o StrictHostKeyChecking=no emadu@178.62.94.228 "ls"
+    deploy:
+        docker:
+            - image: cimg/base:stable
+        steps:
+            - run:
+                name: Deploy Over SSH
+                command: |
+                    ssh $SSH_USER@$SSH_HOST "echo Hello-world"
 
 workflows:
-  build-and-deploy:
-    jobs:
-      - deploy
+    only-deploy:
+        jobs:
+            - deploy:
+                    filters:
+                        branches:
+                            only: main # only deploy on the main branch
